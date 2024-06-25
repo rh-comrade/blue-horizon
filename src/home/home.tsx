@@ -3,8 +3,17 @@ import { Pagination } from '@/components/pagination'
 import {  Toster } from '@/components/toster'
 import React, { useEffect } from 'react'
 import { useState,useRef } from 'react'
-
+import { UseDispatch,useDispatch,useSelector } from 'react-redux'
+import { nameUpdate } from '@/Redux/actions/action'
 const Home = () => {
+  const [name,setName] = useState('')
+  const dispatch = useDispatch();
+  const storeData = useSelector((state:any)=>{
+    return state.appReducer
+  })
+
+
+
     const [pageNo,setPageNo] = useState(1);
     const [currData,setCurrData] = useState([]);
     const perPage = 10;
@@ -246,9 +255,11 @@ const Home = () => {
         const lastIndex:number = pageNo * perPage;
         const firstIndex:number = lastIndex - perPage;
         setCurrData(data?.slice(firstIndex,lastIndex) || [])
+        dispatch(nameUpdate('Rhutik'))
     },[pageNo])
   return (
     <div className='container border border-1 mt-5'>
+      <p>user '{storeData.name}'</p>
      <Pagination pageNo={pageNo} setPageNo={setPageNo} totalPages={Math.ceil(data.length/perPage)} />
      <div className='container'>
         {
