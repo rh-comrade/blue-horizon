@@ -1,10 +1,5 @@
-'use client'
-import React, { useEffect } from 'react'
-import { ToastContainer,toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
-
-const Toster = () => {
-  const notify = ()=>{
+import { toast } from "react-toastify";
+export const notify = (type:string,message:string,position:string)=>{
     switch(type){
       case 'success':
         return toast.success(`${message}`, {
@@ -67,10 +62,3 @@ const Toster = () => {
         });
     }
   }
-
-  return (
-        <ToastContainer />
-  )
-}
-
-export default Toster
