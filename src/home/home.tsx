@@ -1,19 +1,24 @@
 'use client'
 import { Pagination } from '@/components/pagination'
 import {  Toster } from '@/components/toster'
+import style from './home.module.css'
 import React, { useEffect } from 'react'
 import { useState,useRef } from 'react'
 import { UseDispatch,useDispatch,useSelector } from 'react-redux'
 import { nameUpdate } from '@/Redux/actions/action'
+import {Datalist} from '@/components/datalist'
+import { Search } from '@/components/search'
+import { notify } from '@/utils/toster/toster'
 const Home = () => {
   const [name,setName] = useState('')
+  // reudux store data management
   const dispatch = useDispatch();
   const storeData = useSelector((state:any)=>{
     return state.appReducer
   })
 
 
-
+  // pagination data
     const [pageNo,setPageNo] = useState(1);
     const [currData,setCurrData] = useState([]);
     const perPage = 10;
@@ -251,15 +256,24 @@ const Home = () => {
         "title": "eos dolorem iste accusantium est eaque quam",
         "body": "corporis rerum ducimus vel eum accusantium\nmaxime aspernatur a porro possimus iste omnis\nest in deleniti asperiores fuga aut\nvoluptas sapiente vel dolore minus voluptatem incidunt ex"
       }]
+    
+    
+      
     useEffect(()=>{
         const lastIndex:number = pageNo * perPage;
         const firstIndex:number = lastIndex - perPage;
         setCurrData(data?.slice(firstIndex,lastIndex) || [])
         dispatch(nameUpdate('Rhutik'))
     },[pageNo])
+
+
   return (
-    <div className='container border border-1 mt-5'>
+    <div className={`${style.home} container border border-1 mt-5`}>
       <p>user '{storeData.name}'</p>
+      <input className='form-control' type="file"  onChange={(e)=>{console.log(e.target.files[0].type)}} multiple />
+      {/* <Search/> */}
+     <button onClick={()=>notify('success','welcome to blue horizon','top-center')}>send toster message</button>
+      <hr />
      <Pagination pageNo={pageNo} setPageNo={setPageNo} totalPages={Math.ceil(data.length/perPage)} />
      <div className='container'>
         {
@@ -268,6 +282,8 @@ const Home = () => {
             ))
         }
      </div>
+     <Toster/>
+     <Datalist data={['Mens tshirt','Women clothing','Kids wear','Bottom Wear Men']} />
 
      {
 

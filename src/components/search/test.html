@@ -1,0 +1,16 @@
+<script>
+    var timer;
+      function fnSearch(){
+        console.log('fnSearch called')
+      }
+
+     function fnDebounce(){
+        console.log('dddd')
+      clearTimeout(timer);
+      timer=setTimeout(function(){
+        fnSearch();
+      },300)
+     }
+</script>
+
+  <input onkeyup="fnDebounce()"  placeholder="Search..."  />
